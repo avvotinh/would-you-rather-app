@@ -6,7 +6,7 @@ import NavBar from "../components/NavBar";
 import QuestionPoll from "../components/QuestionPoll";
 import NewQuestion from "../components/NewQuestion";
 import LeaderBoard from "../components/LeaderBoard";
-import NotFound from "../components/NotFound";
+import PageNotFound from "../components/PageNotFound";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/questions/:id" element={<QuestionPoll />} />
         <Route path="/add" element={<NewQuestion />} />
         <Route path="/leaderboard" element={<LeaderBoard />} />
-        <Route path="/notfound" element={<NotFound />} />
+        <Route path="/notfound" element={<PageNotFound />} />
       </Routes>
     </Fragment>
   );
