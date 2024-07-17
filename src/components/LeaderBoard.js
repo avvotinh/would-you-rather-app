@@ -1,5 +1,17 @@
+import { Container, Box, Typography } from "@mui/material";
+import LeaderCard from "./LeaderCard";
+
 const LeaderBoard = () => {
-  return <div></div>;
+  return (
+    <Container maxWidth="sm">
+      <Box sx={{ width: "100%", mt: 5 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          LeaderBoard
+        </Typography>
+        <LeaderCard />
+      </Box>
+    </Container>
+  );
 };
 
 export default LeaderBoard;

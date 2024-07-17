@@ -71,7 +71,7 @@ const Home = () => {
           <Tab label="Answered Questions" />
           <Tab label="Unanswered Questions" />
         </Tabs>
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ width: "100%", mt: 2 }}>
           {selectedTab === 0 && (
             <Grid container spacing={2}>
               {answeredQuestions.map((question) => (

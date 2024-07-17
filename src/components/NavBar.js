@@ -1,44 +1,37 @@
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, IconButton, Avatar } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Button,
+  Box,
+} from "@mui/material";
 
 const Header = () => {
   return (
     <AppBar position="static">
-      <Toolbar style={{ justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            component={Link}
-            to="/"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+      <Toolbar>
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Button color="inherit" component={Link} to="/">
             Home
-          </Typography>
-          <Typography
-            component={Link}
-            to="/link"
-            style={{ textDecoration: "none", color: "inherit", marginLeft: 20 }}
-          >
-            Link
-          </Typography>
-          <Typography
-            component={Link}
-            to="/disabled"
-            style={{ textDecoration: "none", color: "inherit", marginLeft: 20 }}
-          >
-            Disabled
-          </Typography>
-        </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography style={{ marginRight: 10 }}>Hop Le</Typography>
-          <Avatar
-            alt="Avatar"
-            src="path-to-avatar.jpg"
-            sx={{ width: 30, height: 30, marginRight: 10 }}
-          />
-          <IconButton component={Link} to="/login" style={{ color: "inherit" }}>
-            <i className="material-icons">exit_to_app</i>
-          </IconButton>
-        </div>
+          </Button>
+          <Button color="inherit" component={Link} to="/add">
+            New Question
+          </Button>
+          <Button color="inherit" component={Link} to="/leaderboard">
+            Leaderboard
+          </Button>
+        </Box>
+
+        <Avatar alt="Hop Le" src="" sx={{ mr: 1 }} />
+        <Typography variant="subtitle1" sx={{ mr: 2 }}>
+          Hop Le
+        </Typography>
+        <IconButton component={Link} to="/login" style={{ color: "inherit" }}>
+          <i className="material-icons">exit_to_app</i>
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
