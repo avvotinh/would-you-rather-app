@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -8,8 +8,17 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setAuthedUser } from "../features/authUser/authUserSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(setAuthedUser(null));
+    navigate("/login");
+  };
   return (
     <AppBar position="static">
       <Toolbar>
@@ -29,7 +38,7 @@ const Header = () => {
         <Typography variant="subtitle1" sx={{ mr: 2 }}>
           Hop Le
         </Typography>
-        <IconButton component={Link} to="/login" style={{ color: "inherit" }}>
+        <IconButton onClick={handleLogout} style={{ color: "inherit" }}>
           <i className="material-icons">exit_to_app</i>
         </IconButton>
       </Toolbar>

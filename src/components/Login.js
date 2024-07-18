@@ -12,8 +12,31 @@ import {
   Box,
 } from "@mui/material";
 import logo from "../logo.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthedUser } from "../features/authUser/authUserSlice";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [selectedUser, setSelectedUser] = useState("");
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleUserChange = (event) => {
+    const userId = event.target.value;
+    setSelectedUser(userId);
+  };
+
+  const handleLogin = () => {
+    if (selectedUser) {
+      dispatch(setAuthedUser(selectedUser));
+      navigate("/");
+    } else {
+      alert("Please select a user to sign in.");
+    }
+  };
+
   return (
     <Container
       sx={{
@@ -40,13 +63,20 @@ const Login = () => {
           </Typography>
           <FormControl variant="filled" fullWidth sx={{ marginBottom: 3 }}>
             <InputLabel id="user-select-label">Select User</InputLabel>
-            <Select labelId="user-select-label" id="user-select">
-              <MenuItem value="1">Option 1</MenuItem>
-              <MenuItem value="2">Option 2</MenuItem>
-              <MenuItem value="3">Option 3</MenuItem>
+            <Select
+              labelId="user-select-label"
+              id="user-select"
+              value={selectedUser}
+              onChange={handleUserChange}
+            >
+              {Object.values(users).map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
-          <Button variant="contained" fullWidth>
+          <Button variant="contained" fullWidth onClick={handleLogin}>
             Sign In
           </Button>
         </CardContent>
