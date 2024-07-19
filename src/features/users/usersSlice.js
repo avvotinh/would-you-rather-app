@@ -12,8 +12,8 @@ const usersSlice = createSlice({
       return { ...state, ...action.payload };
     },
     addAnswerToUser(state, action) {
-      const { authUser, qid, answer } = action.payload;
-      state[authUser].answers[qid] = answer;
+      const { authedUser, qid, answer } = action.payload;
+      state[authedUser].answers[qid] = answer;
     },
     addQuestionToUser(state, action) {
       const { userId, questionId } = action.payload;
@@ -22,18 +22,19 @@ const usersSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(handleSaveQuestionAnswer.fulfilled, (state, action) => {
-      const { authUser, qid, answer } = action.payload;
-      state[authUser].answers[qid] = answer;
+      const { authedUser, qid, answer } = action.payload;
+      state[authedUser].answers[qid] = answer;
     });
   },
 });
 
 export const handleSaveQuestionAnswer = createAsyncThunk(
   "users/handleSaveQuestionAnswer",
-  async ({ authUser, qid, answer }, { dispatch }) => {
-    await saveQuestionAnswer({ authUser, qid, answer });
-    dispatch(addAnswerToQuestion({ authUser, qid, answer }));
-    return { authUser, qid, answer };
+  async ({ qid, answer }, { dispatch, getState }) => {
+    const { authedUser } = getState();
+    await saveQuestionAnswer({ authedUser, qid, answer });
+    dispatch(addAnswerToQuestion({ authedUser, qid, answer }));
+    return { authedUser, qid, answer };
   }
 );
 

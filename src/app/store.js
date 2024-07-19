@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authUserReducer from "../features/authUser/authUserSlice";
+import authedUserReducer from "../features/authedUser/authedUserSlice";
 import questionsReducer from "../features/question/questionsSlice";
 import usersReducer from "../features/users/usersSlice";
 
@@ -14,7 +14,7 @@ const logger = (store) => (next) => (action) => {
 
 const store = configureStore({
   reducer: {
-    authUser: authUserReducer,
+    authedUser: authedUserReducer,
     questions: questionsReducer,
     users: usersReducer,
   },

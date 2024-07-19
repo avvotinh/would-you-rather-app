@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Login from "../components/Login";
 import Home from "../components/Home";
 import NavBar from "../components/NavBar";
-import QuestionPoll from "../components/QuestionPoll";
+import QuestionView from "../components/QuestionView";
 import NewQuestion from "../components/NewQuestion";
 import LeaderBoard from "../components/LeaderBoard";
 import PageNotFound from "../components/PageNotFound";
@@ -13,7 +13,7 @@ import { handleInitialData } from "./shared";
 
 const App = () => {
   const dispatch = useDispatch();
-  const authUser = useSelector((state) => state.authUser);
+  const authedUser = useSelector((state) => state.authedUser);
 
   useEffect(() => {
     dispatch(handleInitialData());
@@ -28,7 +28,7 @@ const App = () => {
       path: "/",
       element: (
         <Fragment>
-          {authUser && <NavBar />}
+          {authedUser && <NavBar />}
           <Outlet />
         </Fragment>
       ),
@@ -45,7 +45,7 @@ const App = () => {
           path: "/questions/:id",
           element: (
             <ProtectedRoute>
-              <QuestionPoll />
+              <QuestionView />
             </ProtectedRoute>
           ),
         },

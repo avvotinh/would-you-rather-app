@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import logo from "../logo.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthedUser } from "../features/authUser/authUserSlice";
+import { setAuthedUser } from "../features/authedUser/authedUserSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -9,14 +9,14 @@ import {
   Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthedUser } from "../features/authUser/authUserSlice";
+import { setAuthedUser } from "../features/authedUser/authedUserSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authUser = useSelector((state) => state.authUser);
+  const authedUser = useSelector((state) => state.authedUser);
   const users = useSelector((state) => state.users);
-  const { avatarURL, name } = users[authUser];
+  const { avatarURL, name } = users[authedUser];
 
   const handleLogout = () => {
     dispatch(setAuthedUser(null));

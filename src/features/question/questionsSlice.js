@@ -12,14 +12,14 @@ const questionsSlice = createSlice({
       return { ...state, ...action.payload };
     },
     addAnswerToQuestion(state, action) {
-      const { authUser, qid, answer } = action.payload;
+      const { authedUser, qid, answer } = action.payload;
       return {
         ...state,
         [qid]: {
           ...state[qid],
           [answer]: {
             ...state[qid][answer],
-            votes: state[qid][answer].votes.concat(authUser),
+            votes: state[qid][answer].votes.concat(authedUser),
           },
         },
       };
@@ -35,7 +35,7 @@ const questionsSlice = createSlice({
 export const handleAddQuestion = createAsyncThunk(
   "questions/handleAddQuestion",
   async (question, { dispatch, getState }) => {
-    const { authedUser } = getState().authUser; // Lấy authedUser từ store
+    const { authedUser } = getState().authedUser; // Lấy authedUser từ store
     const newQuestion = await saveQuestion(question);
     dispatch(
       addQuestionToUser({ userId: authedUser, questionId: newQuestion.id })
