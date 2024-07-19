@@ -8,12 +8,15 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthedUser } from "../features/authUser/authUserSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authUser = useSelector((state) => state.authUser);
+  const users = useSelector((state) => state.users);
+  const { avatarURL, name } = users[authUser];
 
   const handleLogout = () => {
     dispatch(setAuthedUser(null));
@@ -34,9 +37,9 @@ const Header = () => {
           </Button>
         </Box>
 
-        <Avatar alt="Hop Le" src="" sx={{ mr: 1 }} />
+        <Avatar src={avatarURL} alt={name} sx={{ mr: 1 }} />
         <Typography variant="subtitle1" sx={{ mr: 2 }}>
-          Hop Le
+          {name}
         </Typography>
         <IconButton onClick={handleLogout} style={{ color: "inherit" }}>
           <i className="material-icons">exit_to_app</i>
