@@ -9,14 +9,22 @@ import NewQuestion from "../components/NewQuestion";
 import LeaderBoard from "../components/LeaderBoard";
 import PageNotFound from "../components/PageNotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { handleInitialData } from "./shared";
+import { getInitialData } from "../utils/api";
+import { receiveUsers } from "../features/users/usersSlice";
+import { receiveQuestions } from "../features/question/questionsSlice";
 
 const App = () => {
   const dispatch = useDispatch();
   const authedUser = useSelector((state) => state.authedUser);
 
   useEffect(() => {
-    dispatch(handleInitialData());
+    const handleInitialData = async () => {
+      const { users, questions } = await getInitialData();
+      dispatch(receiveUsers(users));
+      dispatch(receiveQuestions(questions));
+    };
+
+    handleInitialData();
   }, [dispatch]);
 
   const router = createBrowserRouter([
