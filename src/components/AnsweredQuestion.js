@@ -6,6 +6,7 @@ import {
   CardContent,
   Avatar,
   Typography,
+  Badge,
 } from "@mui/material";
 import OptionProgress from "./OptionProgress";
 
@@ -16,13 +17,11 @@ const AnsweredQuestion = ({ qid }) => {
   const { optionOne, optionTwo, author: questionAuthor } = questions[qid];
   const { avatarURL, name } = users[questionAuthor];
 
-  const totalVotes = optionOne.votes.length + optionTwo.votes.length;
-  const optionOnePercent = Math.round(
-    (optionOne.votes.length / totalVotes) * 100
-  );
-  const optionTwoPercent = Math.round(
-    (optionTwo.votes.length / totalVotes) * 100
-  );
+  const optionOneVotes = optionOne.votes.length;
+  const optionTwoVotes = optionTwo.votes.length;
+  const totalVotes = optionOneVotes + optionTwoVotes;
+  const optionOnePercent = Math.round((optionOneVotes / totalVotes) * 100);
+  const optionTwoPercent = Math.round((optionTwoVotes / totalVotes) * 100);
 
   const isYourVoteOptionOne = optionOne.votes.includes(authedUser);
   const isYourVoteOptionTwo = optionTwo.votes.includes(authedUser);
@@ -46,10 +45,25 @@ const AnsweredQuestion = ({ qid }) => {
                   padding: "8px",
                   borderRadius: "4px",
                   marginBottom: "8px",
+                  position: "relative",
                 }}
               >
                 <Typography variant="body1">{optionOne.text}</Typography>
+                {isYourVoteOptionOne && (
+                  <Badge
+                    badgeContent="Your vote"
+                    color="success"
+                    sx={{
+                      position: "absolute",
+                      top: 5,
+                      right: 10,
+                    }}
+                  />
+                )}
                 <OptionProgress value={optionOnePercent} />
+                <Typography variant="body2" color="textSecondary">
+                  {optionOneVotes} out of {totalVotes} votes
+                </Typography>
               </Grid>
               <Grid
                 item
@@ -60,20 +74,26 @@ const AnsweredQuestion = ({ qid }) => {
                   padding: "8px",
                   borderRadius: "4px",
                   marginBottom: "8px",
+                  position: "relative",
                 }}
               >
                 <Typography variant="body1">{optionTwo.text}</Typography>
+                {isYourVoteOptionTwo && (
+                  <Badge
+                    badgeContent="Your vote"
+                    color="success"
+                    sx={{
+                      position: "absolute",
+                      top: 5,
+                      right: 10,
+                    }}
+                  />
+                )}
                 <OptionProgress value={optionTwoPercent} />
+                <Typography variant="body2" color="textSecondary">
+                  {optionTwoVotes} out of {totalVotes} votes
+                </Typography>
               </Grid>
-            </Grid>{" "}
-            <Grid container justifyContent="flex-end">
-              <Typography
-                variant="caption"
-                backgroundColor="#e0f7fa"
-                sx={{ marginTop: "16px", p: 0.5 }}
-              >
-                * Option your choices.
-              </Typography>
             </Grid>
           </CardContent>
         </Card>
