@@ -35,7 +35,7 @@ const questionsSlice = createSlice({
 export const handleAddQuestion = createAsyncThunk(
   "questions/handleAddQuestion",
   async (question, { dispatch, getState }) => {
-    const { authedUser } = getState().authedUser; // Lấy authedUser từ store
+    const { authedUser } = getState();
     const newQuestion = await saveQuestion(question);
     dispatch(
       addQuestionToUser({ userId: authedUser, questionId: newQuestion.id })

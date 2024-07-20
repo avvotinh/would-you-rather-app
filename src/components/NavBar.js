@@ -23,7 +23,7 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           <Button color="inherit" component={Link} to="/">

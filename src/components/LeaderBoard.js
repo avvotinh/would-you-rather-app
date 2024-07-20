@@ -3,7 +3,7 @@ import LeaderCard from "./LeaderCard";
 
 const LeaderBoard = () => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box sx={{ width: "100%", mt: 5 }}>
         <Typography variant="h4" align="center" gutterBottom>
           LeaderBoard
