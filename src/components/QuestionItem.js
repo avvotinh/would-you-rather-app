@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const QuestionCard = ({ question }) => {
+const QuestionItem = ({ question }) => {
   const users = useSelector((state) => state.users);
   const { avatarURL, name } = users[question.author];
   const { optionOne, id } = question;
@@ -32,4 +32,4 @@ const QuestionCard = ({ question }) => {
   );
 };
 
-export default QuestionCard;
+export default QuestionItem;

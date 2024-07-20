@@ -5,50 +5,65 @@ import {
   CardContent,
   Avatar,
   Typography,
-  LinearProgress,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import OptionProgress from "./OptionProgress";
 
-const AnsweredQuestion = ({ questionId }) => {
+const AnsweredQuestion = ({ qid }) => {
   const users = useSelector((state) => state.users);
+  const authedUser = useSelector((state) => state.authedUser);
   const questions = useSelector((state) => state.questions);
+  const { optionOne, optionTwo, author: questionAuthor } = questions[qid];
+  const { avatarURL, name } = users[questionAuthor];
+
+  const totalVotes = optionOne.votes.length + optionTwo.votes.length;
+  const optionOnePercent = Math.round(
+    (optionOne.votes.length / totalVotes) * 100
+  );
+  const optionTwoPercent = Math.round(
+    (optionTwo.votes.length / totalVotes) * 100
+  );
+
+  const isYourVoteOptionOne = optionOne.votes.includes(authedUser);
+  const isYourVoteOptionTwo = optionTwo.votes.includes(authedUser);
 
   return (
     <Grid container>
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <Card sx={{ m: 3 }}>
-          <CardHeader avatar={<Avatar avatarURL={""} />} title={"ABC asks:"} />
+          <CardHeader
+            avatar={<Avatar src={avatarURL} alt={name} />}
+            title={`${name} ask:`}
+          />
           <CardContent>
             <Grid container direction="column">
               <Grid
                 item
                 sx={{
-                  backgroundColor: "#e0f7fa", // Áp dụng màu nền cho cả cụm
+                  backgroundColor: isYourVoteOptionOne
+                    ? "#e0f7fa"
+                    : "transparent",
                   padding: "8px",
                   borderRadius: "4px",
                   marginBottom: "8px",
                 }}
               >
-                <Typography variant="body1">ABC</Typography>
-                <LinearProgress variant="determinate" value={50} />
-                <Typography variant="body2" color="textSecondary">
-                  chosen by 50 out of 100 users
-                </Typography>
+                <Typography variant="body1">{optionOne.text}</Typography>
+                <OptionProgress value={optionOnePercent} />
               </Grid>
               <Grid
                 item
                 sx={{
-                  backgroundColor: "transparent",
+                  backgroundColor: isYourVoteOptionTwo
+                    ? "#e0f7fa"
+                    : "transparent",
                   padding: "8px",
                   borderRadius: "4px",
                   marginBottom: "8px",
                 }}
               >
-                <Typography variant="body1">ABC</Typography>
-                <LinearProgress variant="determinate" value={50} />
-                <Typography variant="body2" color="textSecondary">
-                  chosen by 50 out of 100 users
-                </Typography>
+                <Typography variant="body1">{optionTwo.text}</Typography>
+                <OptionProgress value={optionTwoPercent} />
               </Grid>
             </Grid>{" "}
             <Grid container justifyContent="flex-end">
