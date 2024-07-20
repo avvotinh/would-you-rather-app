@@ -56,7 +56,7 @@ const NewQuestion = () => {
           Would You Rather
         </Typography>
         <Grid container>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <Card sx={{ m: 3 }}>
               <CardHeader
                 avatar={<Avatar src={avatarURL} />}
