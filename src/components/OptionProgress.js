@@ -1,10 +1,9 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Typography, Box } from "@mui/material";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import { styled } from "@mui/material/styles";
 
 const OptionProgress = ({ value, ...rest }) => {
   return (

@@ -1,19 +1,18 @@
-import { Container, Box, Typography } from "@mui/material";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Container, Box, Typography, Button } from "@mui/material";
 import PageNotFound from "./PageNotFound";
 import AnsweredQuestion from "./AnsweredQuestion";
 import UnansweredQuestion from "./UnansweredQuestion";
+import { isAnsweredQuestion } from "../app/selector";
 
 const QuestionView = () => {
   const { id } = useParams();
-  const users = useSelector((state) => state.users);
+  const navigate = useNavigate();
   const questions = useSelector((state) => state.questions);
-  const authedUser = useSelector((state) => state.authedUser);
-  const autherUserAnsweres = users[authedUser].answers;
-  const isAnswered = Object.keys(autherUserAnsweres).includes(id);
   const isQuestionExisting = Object.keys(questions).includes(id);
+  const isAnswered = useSelector((state) => isAnsweredQuestion(state, id));
 
   return (
     <Fragment>
@@ -29,6 +28,14 @@ const QuestionView = () => {
               <UnansweredQuestion qid={id} />
             )}
           </Box>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => navigate(-1)}
+            sx={{ mt: 2 }}
+          >
+            Back
+          </Button>
         </Container>
       ) : (
         <PageNotFound />

@@ -17,7 +17,7 @@ const usersSlice = createSlice({
     },
     addQuestionToUser(state, action) {
       const { userId, questionId } = action.payload;
-      state[userId].questions.concat(questionId);
+      state[userId].questions.push(questionId);
     },
   },
   extraReducers(builder) {

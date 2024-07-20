@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleAddQuestion } from "../features/question/questionsSlice";
 import { useNavigate } from "react-router-dom";
+import { getAuthedUserInfo } from "../app/selector";
 
 const NewQuestion = () => {
   const [optionOne, setOptionOne] = useState("");
@@ -24,9 +25,8 @@ const NewQuestion = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
   const authedUser = useSelector((state) => state.authedUser);
-  const { avatarURL, name } = users[authedUser];
+  const { avatarURL, name } = useSelector(getAuthedUserInfo);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,7 +57,7 @@ const NewQuestion = () => {
         </Typography>
         <Grid container>
           <Grid item xs={12}>
-            <Card sx={{ m: 3 }}>
+            <Card>
               <CardHeader
                 avatar={<Avatar src={avatarURL} />}
                 title={`${name} asks:`}

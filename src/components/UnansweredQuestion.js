@@ -39,7 +39,7 @@ const UnansweredQuestion = ({ qid }) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Card sx={{ m: 3 }}>
+        <Card>
           <CardHeader
             avatar={<Avatar src={avatarURL} />}
             title={`${name} asks:`}

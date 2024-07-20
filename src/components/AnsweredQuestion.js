@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   Grid,
   Card,
@@ -6,7 +7,6 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 import OptionProgress from "./OptionProgress";
 
 const AnsweredQuestion = ({ qid }) => {
@@ -30,7 +30,7 @@ const AnsweredQuestion = ({ qid }) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Card sx={{ m: 3 }}>
+        <Card>
           <CardHeader
             avatar={<Avatar src={avatarURL} alt={name} />}
             title={`${name} ask:`}

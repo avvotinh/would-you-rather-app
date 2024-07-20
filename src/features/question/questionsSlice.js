@@ -45,5 +45,4 @@ export const handleAddQuestion = createAsyncThunk(
 );
 
 export const { receiveQuestions, addAnswerToQuestion } = questionsSlice.actions;
-
 export default questionsSlice.reducer;

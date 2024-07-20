@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   Container,
   Box,
@@ -10,7 +11,6 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 import LeaderItem from "./LeaderItem";
 
 const LeaderBoard = () => {

@@ -2,21 +2,16 @@ import { Container, Box, Tabs, Tab } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import QuestionList from "./QuestionList";
+import { getQuestions } from "../app/selector";
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const authedUser = useSelector((state) => state.authedUser);
-  const users = useSelector((state) => state.users);
-  const questions = useSelector((state) => state.questions);
-
-  const answeredIds = Object.keys(users[authedUser].answers);
-  const unansweredQuestions = Object.values(questions)
-    .filter((question) => !answeredIds.includes(question.id))
-    .sort((a, b) => b.timestamp - a.timestamp);
-  const answeredQuestions = Object.values(questions)
-    .filter((question) => answeredIds.includes(question.id))
-    .sort((a, b) => b.timestamp - a.timestamp);
+  const unansweredQuestions = useSelector((state) =>
+    getQuestions(state, "UNANSWERED")
+  );
+  const answeredQuestions = useSelector((state) =>
+    getQuestions(state, "ANSWERED")
+  );
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);

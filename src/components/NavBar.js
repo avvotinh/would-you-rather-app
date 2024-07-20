@@ -14,15 +14,14 @@ import {
   MenuItem,
 } from "@mui/material";
 import { setAuthedUser } from "../features/authedUser/authedUserSlice";
+import { getAuthedUserInfo } from "../app/selector";
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authedUser = useSelector((state) => state.authedUser);
-  const users = useSelector((state) => state.users);
-  const { avatarURL, name } = users[authedUser];
+  const { avatarURL, name } = useSelector(getAuthedUserInfo);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

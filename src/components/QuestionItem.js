@@ -23,7 +23,12 @@ const QuestionItem = ({ question }) => {
           {optionOne.text}...?
         </Typography>
         <Grid container justifyContent="flex-end">
-          <Button component={Link} to={`/questions/${id}`} variant="outlined">
+          <Button
+            component={Link}
+            to={`/questions/${id}`}
+            variant="outlined"
+            size="small"
+          >
             View Poll
           </Button>
         </Grid>
