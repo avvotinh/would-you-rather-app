@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { saveQuestionAnswer } from "../../utils/api";
 import { addAnswerToQuestion } from "../question/questionsSlice";
+import { setIsLoading } from "../../app/loadingSlice";
 
 const initialState = {};
 
@@ -31,10 +32,17 @@ const usersSlice = createSlice({
 export const handleSaveQuestionAnswer = createAsyncThunk(
   "users/handleSaveQuestionAnswer",
   async ({ qid, answer }, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
     const { authedUser } = getState();
-    await saveQuestionAnswer({ authedUser, qid, answer });
-    dispatch(addAnswerToQuestion({ authedUser, qid, answer }));
-    return { authedUser, qid, answer };
+    try {
+      await saveQuestionAnswer({ authedUser, qid, answer });
+      dispatch(addAnswerToQuestion({ authedUser, qid, answer }));
+      return { authedUser, qid, answer };
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch(setIsLoading(false));
+    }
   }
 );
 

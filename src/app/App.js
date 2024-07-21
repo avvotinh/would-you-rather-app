@@ -12,6 +12,8 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import { getInitialData } from "../utils/api";
 import { receiveUsers } from "../features/users/usersSlice";
 import { receiveQuestions } from "../features/question/questionsSlice";
+import Loading from "../components/Loading";
+import { setIsLoading } from "./loadingSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,9 +21,15 @@ const App = () => {
 
   useEffect(() => {
     const handleInitialData = async () => {
-      const { users, questions } = await getInitialData();
-      dispatch(receiveUsers(users));
-      dispatch(receiveQuestions(questions));
+      dispatch(setIsLoading(true)); // Set loading to true
+      try {
+        const { users, questions } = await getInitialData();
+        dispatch(receiveUsers(users));
+        dispatch(receiveQuestions(questions));
+      } catch (error) {
+      } finally {
+        dispatch(setIsLoading(false));
+      }
     };
 
     handleInitialData();
@@ -81,7 +89,12 @@ const App = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Fragment>
+      <Loading />
+      <RouterProvider router={router} />
+    </Fragment>
+  );
 };
 
 export default App;
