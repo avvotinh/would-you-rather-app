@@ -8,10 +8,10 @@ import { BrowserRouter } from "react-router-dom";
 describe("QuestionItem Component", () => {
   const mockQuestion = {
     id: "8xf0y6ziyjabvozdd253nd",
-    author: "sarahedo",
+    author: "userTest",
     optionOne: {
       text: "Build our new application using React",
-      votes: ["sarahedo"],
+      votes: ["userTest"],
     },
     optionTwo: {
       text: "Build our new application using Vue.js",
@@ -19,14 +19,23 @@ describe("QuestionItem Component", () => {
     },
   };
 
+  const renderComponent = () =>
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <QuestionItem question={mockQuestion} />
+        </BrowserRouter>
+      </Provider>
+    );
+
   let store;
 
   beforeAll(() => {
     const mockUsers = {
-      sarahedo: {
-        id: "sarahedo",
-        name: "Sarah Edo",
-        avatarURL: "https://example.com/avatar.jpg",
+      userTest: {
+        id: "userTest",
+        name: "User Test",
+        avatarURL: "avatar.jpg",
       },
     };
 
@@ -34,49 +43,17 @@ describe("QuestionItem Component", () => {
     store = mockStore({ users: mockUsers });
   });
 
-  it("renders correctly", () => {
-    const { asFragment } = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <QuestionItem question={mockQuestion} />
-        </BrowserRouter>
-      </Provider>
-    );
+  it("matches the snapshot of the rendered QuestionItem component", () => {
+    const { asFragment } = renderComponent();
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("displays the author name and avatar", () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <QuestionItem question={mockQuestion} />
-        </BrowserRouter>
-      </Provider>
-    );
-    expect(screen.getByText("Sarah Edo ask:")).toBeInTheDocument();
-  });
-
-  it("displays the first option text", () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <QuestionItem question={mockQuestion} />
-        </BrowserRouter>
-      </Provider>
-    );
+  it("renders the QuestionItem component with correct content", () => {
+    renderComponent();
+    expect(screen.getByText("User Test ask:")).toBeInTheDocument();
     expect(
       screen.getByText("Build our new application using React...?")
     ).toBeInTheDocument();
-  });
-
-  it("links to the question details page", () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <QuestionItem question={mockQuestion} />
-        </BrowserRouter>
-      </Provider>
-    );
     const link = screen.getByRole("link", { name: "View Poll" });
     expect(link).toHaveAttribute("href", "/questions/8xf0y6ziyjabvozdd253nd");
   });

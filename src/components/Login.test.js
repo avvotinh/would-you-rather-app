@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import store from "../app/store";
 
 describe("Login Component", () => {
-  it("renders the login form", () => {
+  const renderComponent = () =>
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -14,6 +14,14 @@ describe("Login Component", () => {
         </BrowserRouter>
       </Provider>
     );
+
+  it("matches the snapshot of the rendered Login component", () => {
+    const { container } = renderComponent();
+    expect(container).toMatchSnapshot();
+  });
+
+  it("renders the Login component with correct content", () => {
+    renderComponent();
     expect(
       screen.getByText("Welcome to the Would You Rather App")
     ).toBeInTheDocument();
@@ -22,16 +30,5 @@ describe("Login Component", () => {
       screen.getByRole("combobox", { name: "Select User" })
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign In" })).toBeInTheDocument();
-  });
-
-  it("matches snapshot", () => {
-    const { container } = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      </Provider>
-    );
-    expect(container).toMatchSnapshot();
   });
 });
